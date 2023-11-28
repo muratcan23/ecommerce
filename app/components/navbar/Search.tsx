@@ -1,5 +1,5 @@
 const Search = () => {
-  return <div>Search</div>;
+  return <div className="hidden md:flex flex-1">Search</div>;
 };
 
 export default Search;
