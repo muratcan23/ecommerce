@@ -4,6 +4,7 @@ import { Rating } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
 import PageContainer from "../conatiners/PageContainer";
+import Button from "../general/Button";
 import { Counter } from "../general/Counter";
 
 export type CardProductProps = {
@@ -37,16 +38,20 @@ const DetailClient = ({ product }: { product: any }) => {
     setCardProduct((prev) => ({ ...prev, quantity: prev.quantity - 1 }));
   };
 
+  let productRating =
+    product?.reviews?.reduce((acc: number, item: any) => acc + item.rating, 0) /
+    product?.reviews?.length;
+
   return (
     <div className="my-10">
       <PageContainer>
         <div className="block  md:flex gap-10 justify-center">
-          <div className="relative h-[400px] w-[400px]  ">
+          <div className="relative h-[200px] md:h-[400px]  w-[200px] md:w-[400px] mb-3 md:mb-0 ">
             <Image src={product.image} fill alt="" />
           </div>
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2">
             <div className="text-xl md:text-2xl">{product?.name}</div>
-            <Rating name="read-only" value={3} readOnly />
+            <Rating name="read-only" value={productRating} readOnly />
             <div className="text-slate-500">{product?.description} </div>
 
             <div className="flex items-center gap-2">
@@ -62,8 +67,13 @@ const DetailClient = ({ product }: { product: any }) => {
               decreaseFunc={decreaseFunc}
               cardProduct={cardProduct}
             />
+            <div className="text-lg md:xl text-orange-600 font-bold">
+              {product.price} €
+            </div>
+            <Button text="Add to Cart" small onClick={() => {}} />
           </div>
         </div>
+        <div>Comments...</div>
       </PageContainer>
     </div>
   );
