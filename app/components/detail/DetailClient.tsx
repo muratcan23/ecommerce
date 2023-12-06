@@ -6,6 +6,8 @@ import { useState } from "react";
 import PageContainer from "../conatiners/PageContainer";
 import Button from "../general/Button";
 import { Counter } from "../general/Counter";
+import Heading from "../general/Heading";
+import Comment from "./Comment";
 
 export type CardProductProps = {
   id: string;
@@ -73,7 +75,12 @@ const DetailClient = ({ product }: { product: any }) => {
             <Button text="Add to Cart" small onClick={() => {}} />
           </div>
         </div>
-        <div>Comments...</div>
+        <Heading text="Comments" center={false} />
+        <div>
+          {product?.reviews?.map((prd: any) => (
+            <Comment key={prd.id} prd={prd} />
+          ))}
+        </div>
       </PageContainer>
     </div>
   );

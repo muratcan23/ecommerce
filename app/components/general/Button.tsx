@@ -24,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({
       } ${outline ? "border text-black" : "bg-black text-white"}`}
       onClick={onClick}
     >
+      {/* {icon && <Icon/> }  this is wrong useage */}
       {Icon && <Icon />}
       {text}
     </button>
