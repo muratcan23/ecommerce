@@ -1,5 +1,6 @@
 "use client";
 
+import useCart from "@/hooks/useCart";
 import { Rating } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
@@ -20,6 +21,8 @@ export type CardProductProps = {
 };
 
 const DetailClient = ({ product }: { product: any }) => {
+  const { productCartQty } = useCart();
+
   const [cardProduct, setCardProduct] = useState<CardProductProps>({
     id: product.id,
     name: product.name,
@@ -29,6 +32,8 @@ const DetailClient = ({ product }: { product: any }) => {
     image: product.image,
     inStock: product.inStock,
   });
+
+  console.log(productCartQty, "productCartQty");
 
   const increaseFunc = () => {
     if (cardProduct.quantity == 10) return;
