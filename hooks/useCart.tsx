@@ -18,15 +18,14 @@ export const CartContextProvider = (props: Props) => {
     productCartQty,
   };
 
-  return;
-  <CartContext.Provider value={value} {...props} />;
+  return <CartContext.Provider value={value} {...props} />;
 };
 
 const useCart = () => {
   const context = useContext(CartContext);
 
-  if (context == null) {
-    throw new Error("an error accoured!");
+  if (context === null) {
+    throw new Error("An error occurred!");
   }
   return context;
 };
