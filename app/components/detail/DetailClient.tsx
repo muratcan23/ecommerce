@@ -21,7 +21,7 @@ export type CardProductProps = {
 };
 
 const DetailClient = ({ product }: { product: any }) => {
-  const { productCartQty } = useCart();
+  const { productCartQty, addToBasket, cartPrdcts } = useCart();
 
   const [cardProduct, setCardProduct] = useState<CardProductProps>({
     id: product.id,
@@ -33,7 +33,7 @@ const DetailClient = ({ product }: { product: any }) => {
     inStock: product.inStock,
   });
 
-  console.log(productCartQty, "productCartQty");
+  console.log(cartPrdcts, "cartPrdcts");
 
   const increaseFunc = () => {
     if (cardProduct.quantity == 10) return;
@@ -77,7 +77,13 @@ const DetailClient = ({ product }: { product: any }) => {
             <div className="text-lg md:xl text-orange-600 font-bold">
               {product.price} €
             </div>
-            <Button text="Add to Cart" small onClick={() => {}} />
+            <Button
+              text="Add to Cart"
+              small
+              onClick={() => {
+                addToBasket(cardProduct);
+              }}
+            />
           </div>
         </div>
         <Heading text="Comments" center={false} />
