@@ -1,6 +1,7 @@
 import CartProvider from "@/provider/CartProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
 import "./globals.css";
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Toaster position="top-right" reverseOrder={false} />
         <CartProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar />
