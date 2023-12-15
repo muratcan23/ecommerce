@@ -6,7 +6,7 @@ import PageContainer from "../conatiners/PageContainer";
 import Button from "../general/Button";
 
 const CartClient = () => {
-  const { cartPrdcts } = useCart();
+  const { cartPrdcts, removeFromCart, removeCart } = useCart();
   console.log(cartPrdcts);
   if (!cartPrdcts || cartPrdcts.length == 0) {
     return <div>"There is no product in your cart..."</div>;
@@ -34,10 +34,22 @@ const CartClient = () => {
               <div className="w-1/5">2</div>
               <div className="w-1/5 text-orange-600 text-lg">{cart.price}₺</div>
               <div className="w-1/5">
-                <Button text="Remove product" small onClick={() => {}} />
+                <Button
+                  text="Remove product"
+                  small
+                  onClick={() => removeFromCart(cart)}
+                />
               </div>
             </div>
           ))}
+        </div>
+        <div className="flex items-center justify-between m-5 py-5 border-t ">
+          <button className="w-1/5 underline text-sm " onClick={removeCart}>
+            Remove Cart
+          </button>
+          <div className="text-lg md:text-2xl text-orange-600 font-bold ">
+            1000
+          </div>
         </div>
       </PageContainer>
     </div>

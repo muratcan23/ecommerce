@@ -1,5 +1,4 @@
 "use client";
-
 import { CardProductProps } from "@/app/components/detail/DetailClient";
 import {
   createContext,
@@ -15,6 +14,7 @@ interface CartContextProps {
   cartPrdcts: CardProductProps[] | null;
   addToBasket: (product: CardProductProps) => void;
   removeFromCart: (product: CardProductProps) => void;
+  removeCart: () => void;
 }
 const CartContext = createContext<CartContextProps | null>(null);
 
@@ -49,12 +49,33 @@ export const CartContextProvider = (props: Props) => {
     [cartPrdcts]
   );
 
-  const removeFromCart = useCallback((product: CardProductProps) => {}, []);
+  const removeFromCart = useCallback(
+    (product: CardProductProps) => {
+      if (cartPrdcts) {
+        const filteredProducts = cartPrdcts.filter(
+          (cart) => cart.id !== product.id
+        );
+
+        setCartPrdcts(filteredProducts);
+        toast.success("Ürün Sepetten Silindi...");
+        localStorage.setItem("cart", JSON.stringify(filteredProducts));
+      }
+    },
+    [cartPrdcts]
+  );
+
+  const removeCart = useCallback(() => {
+    setCartPrdcts(null);
+    toast.success("Now your cart is empty...");
+    localStorage.setItem("cart", JSON.stringify(null));
+  }, []);
 
   let value = {
     productCartQty,
     addToBasket,
     cartPrdcts,
+    removeFromCart,
+    removeCart,
   };
 
   return <CartContext.Provider value={value} {...props} />;
