@@ -13,23 +13,76 @@ interface CartContextProps {
   productCartQty: number;
   cartPrdcts: CardProductProps[] | null;
   addToBasket: (product: CardProductProps) => void;
+  addToBasketIncrease: (product: CardProductProps) => void;
+  addToBasketDecrease: (product: CardProductProps) => void;
   removeFromCart: (product: CardProductProps) => void;
   removeCart: () => void;
 }
 const CartContext = createContext<CartContextProps | null>(null);
 
 interface Props {
-  [PropName: string]: any;
+  [propName: string]: any;
 }
-
 export const CartContextProvider = (props: Props) => {
   const [productCartQty, setProductCartQty] = useState(0);
   const [cartPrdcts, setCartPrdcts] = useState<CardProductProps[] | null>(null);
 
   useEffect(() => {
     let getItem: any = localStorage.getItem("cart");
-    let getItemPArse: CardProductProps[] | null = JSON.parse(getItem);
-    setCartPrdcts(getItemPArse);
+    let getItemParse: CardProductProps[] | null = JSON.parse(getItem);
+    setCartPrdcts(getItemParse);
+  }, []);
+
+  const addToBasketIncrease = useCallback(
+    (product: CardProductProps) => {
+      let updatedCart;
+      if (product.quantity == 10) {
+        return toast.error("you cant add more...");
+      }
+      if (cartPrdcts) {
+        updatedCart = [...cartPrdcts];
+        const existingItem = cartPrdcts.findIndex(
+          (item) => item.id === product.id
+        );
+
+        if (existingItem > -1) {
+          updatedCart[existingItem].quantity = ++updatedCart[existingItem]
+            .quantity;
+        }
+        setCartPrdcts(updatedCart);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+      }
+    },
+    [cartPrdcts]
+  );
+
+  const addToBasketDecrease = useCallback(
+    (product: CardProductProps) => {
+      let updatedCart;
+      if (product.quantity == 1) {
+        return toast.error("You cant add less...");
+      }
+      if (cartPrdcts) {
+        updatedCart = [...cartPrdcts];
+        const existingItem = cartPrdcts.findIndex(
+          (item) => item.id === product.id
+        );
+
+        if (existingItem > -1) {
+          updatedCart[existingItem].quantity = --updatedCart[existingItem]
+            .quantity;
+        }
+        setCartPrdcts(updatedCart);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+      }
+    },
+    [cartPrdcts]
+  );
+
+  const removeCart = useCallback(() => {
+    setCartPrdcts(null);
+    toast.success("Cart is clear...");
+    localStorage.setItem("cart", JSON.stringify(null));
   }, []);
 
   const addToBasket = useCallback(
@@ -57,18 +110,12 @@ export const CartContextProvider = (props: Props) => {
         );
 
         setCartPrdcts(filteredProducts);
-        toast.success("Ürün Sepetten Silindi...");
+        toast.success("Product removed from cart...");
         localStorage.setItem("cart", JSON.stringify(filteredProducts));
       }
     },
     [cartPrdcts]
   );
-
-  const removeCart = useCallback(() => {
-    setCartPrdcts(null);
-    toast.success("Now your cart is empty...");
-    localStorage.setItem("cart", JSON.stringify(null));
-  }, []);
 
   let value = {
     productCartQty,
@@ -76,18 +123,18 @@ export const CartContextProvider = (props: Props) => {
     cartPrdcts,
     removeFromCart,
     removeCart,
+    addToBasketIncrease,
+    addToBasketDecrease,
   };
-
   return <CartContext.Provider value={value} {...props} />;
 };
 
-const useCart = () => {
+const UseCart = () => {
   const context = useContext(CartContext);
-
-  if (context === null) {
-    throw new Error("An error occurred!");
+  if (context == null) {
+    throw new Error("Something is wrong...");
   }
   return context;
 };
 
-export default useCart;
+export default UseCart;

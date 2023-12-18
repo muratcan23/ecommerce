@@ -1,25 +1,39 @@
 "use client";
 
-import useCart from "@/hooks/useCart";
+import UseCart from "@/hooks/useCart";
 import Image from "next/image";
 import PageContainer from "../conatiners/PageContainer";
+import { CardProductProps } from "../detail/DetailClient";
 import Button from "../general/Button";
+import { Counter } from "../general/Counter";
 
 const CartClient = () => {
-  const { cartPrdcts, removeFromCart, removeCart } = useCart();
-  console.log(cartPrdcts);
+  const {
+    cartPrdcts,
+    removeFromCart,
+    removeCart,
+    addToBasketIncrease,
+    addToBasketDecrease,
+  } = UseCart();
+
+  console.log(cartPrdcts, "cartPrdcts");
   if (!cartPrdcts || cartPrdcts.length == 0) {
-    return <div>"There is no product in your cart..."</div>;
+    return <div>Sepetinizde ürün bulunmamaktadır...</div>;
   }
 
+  let cartPrdctsTotal = cartPrdcts.reduce(
+    (acc: any, item: CardProductProps) => acc + item.quantity * item.price,
+    0
+  );
   return (
     <div className="my-3 md:my-10">
       <PageContainer>
-        <div className="flex items-center gap-3 text-center font-bold border-b py-3">
-          <div className="w-1/5">Product Img</div>
-          <div className="w-1/5">Product Name</div>
-          <div className="w-1/5">Product quantity</div>
-          <div className="w-1/5">Product Price</div>
+        <div className="flex items-center gap-3 text-center border-b py-3">
+          <div className="w-1/5">Ürün Resmi</div>
+          <div className="w-1/5">Ürün Adı</div>
+          <div className="w-1/5">Ürün Miktarı</div>
+          <div className="w-1/5">Ürün Fiyatı</div>
+          <div className="w-1/5"></div>
         </div>
         <div>
           {cartPrdcts.map((cart) => (
@@ -30,12 +44,20 @@ const CartClient = () => {
               <div className="w-1/5 flex items-center justify-center">
                 <Image src={cart.image} width={40} height={40} alt="" />
               </div>
-              <div className="w-1/5">{cart.name} </div>
-              <div className="w-1/5">2</div>
-              <div className="w-1/5 text-orange-600 text-lg">{cart.price}₺</div>
+              <div className="w-1/5">{cart.name}</div>
+              <div className="w-1/5 flex justify-center">
+                <Counter
+                  cardProduct={cart}
+                  increaseFunc={() => addToBasketIncrease(cart)}
+                  decreaseFunc={() => addToBasketDecrease(cart)}
+                />
+              </div>
+              <div className="w-1/5 text-orange-600 text-lg">
+                {cart.price} ₺
+              </div>
               <div className="w-1/5">
                 <Button
-                  text="Remove product"
+                  text="Ürünü Sil"
                   small
                   onClick={() => removeFromCart(cart)}
                 />
@@ -43,12 +65,15 @@ const CartClient = () => {
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-between m-5 py-5 border-t ">
-          <button className="w-1/5 underline text-sm " onClick={removeCart}>
-            Remove Cart
+        <div className="flex items-center justify-between my-5 py-5 border-t">
+          <button
+            onClick={() => removeCart()}
+            className="w-1/5 underline text-sm"
+          >
+            Sepeti Sil
           </button>
-          <div className="text-lg md:text-2xl text-orange-600 font-bold ">
-            1000
+          <div className="text-lg md:text-2xl text-orange-600 font-bold">
+            {cartPrdctsTotal} ₺
           </div>
         </div>
       </PageContainer>
