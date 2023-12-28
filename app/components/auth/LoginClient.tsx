@@ -28,6 +28,7 @@ const LoginClient: React.FC<LoginClientProps> = ({ currentUser }) => {
   } = useForm<FieldValues>();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log("Form data submitted:", data); // Check if form data is captured correctly
     signIn("credentials", {
       ...data,
       redirect: false,
@@ -35,11 +36,12 @@ const LoginClient: React.FC<LoginClientProps> = ({ currentUser }) => {
       if (callback?.ok) {
         router.push("/cart");
         router.refresh();
-        toast.success("Login İşlemi Basarılı...");
+        toast.success("Login succes...");
       }
 
       if (callback?.error) {
         toast.error(callback.error);
+        console.log("login error");
       }
     });
   };
@@ -63,7 +65,7 @@ const LoginClient: React.FC<LoginClientProps> = ({ currentUser }) => {
           required
         />
         <Input
-          placeholder="Parola"
+          placeholder="Password"
           type="password"
           id="password"
           register={register}
