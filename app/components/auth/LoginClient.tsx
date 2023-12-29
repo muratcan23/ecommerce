@@ -2,13 +2,12 @@
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa";
 
+import { User } from "@prisma/client";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-
-import { User } from "next-auth";
 import Authcontainer from "../conatiners/AuthContainer";
 import Button from "../general/Button";
 import Heading from "../general/Heading";
@@ -28,7 +27,6 @@ const LoginClient: React.FC<LoginClientProps> = ({ currentUser }) => {
   } = useForm<FieldValues>();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log("Form data submitted:", data); // Check if form data is captured correctly
     signIn("credentials", {
       ...data,
       redirect: false,
@@ -36,12 +34,11 @@ const LoginClient: React.FC<LoginClientProps> = ({ currentUser }) => {
       if (callback?.ok) {
         router.push("/cart");
         router.refresh();
-        toast.success("Login succes...");
+        toast.success("Login İşlemi Basarılı...");
       }
 
       if (callback?.error) {
         toast.error(callback.error);
-        console.log("login error");
       }
     });
   };
@@ -65,23 +62,23 @@ const LoginClient: React.FC<LoginClientProps> = ({ currentUser }) => {
           required
         />
         <Input
-          placeholder="Password"
+          placeholder="Parola"
           type="password"
           id="password"
           register={register}
           errors={errors}
           required
         />
-        <Button text="Sign in" onClick={handleSubmit(onSubmit)} />
+        <Button text="Giriş Yap" onClick={handleSubmit(onSubmit)} />
         <div className="text-center my-2 text-sm text-red-500">
-          If you didnt sign in before{" "}
+          Daha Önce Kayıt Olmadıysa{" "}
           <Link className="underline " href="/register">
-            click here
+            buraya tıkla
           </Link>
         </div>
         <div className="text-center my-2 font-bold text-lg">OR</div>
         <Button
-          text="Sign in with Google"
+          text="Google İle Giriş Yap"
           icon={FaGoogle}
           outline
           onClick={() => signIn("google")}
