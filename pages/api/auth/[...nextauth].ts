@@ -1,5 +1,6 @@
 import prisma from "@/libs/prismadb";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -32,7 +33,27 @@ export default NextAuth({
         if (!user || user.hashedPassword) {
           throw new Error("There is no such user");
         }
+
+        const comparePassword = await bcrypt.compare(
+          credentials.password,
+          user.hashedPassword
+        );
+
+        if (!comparePassword) {
+          throw new Error("Wrong pasdword...");
+        }
+
+        return user;
       },
     }),
   ],
+
+  pages: {
+    signIn: "/login",
+  },
+  debug: process.env.NODE_ENV === "development",
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 });
