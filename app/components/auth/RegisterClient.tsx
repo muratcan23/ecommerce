@@ -37,7 +37,7 @@ const RegisterClient: React.FC<RegisterClientProps> = ({ currentUser }) => {
       }).then((callback) => {
         if (callback?.ok) {
           router.push("/cart");
-          router.refresh();
+          router.refresh(); // refresh page if this happens
           toast.success("Login successfull...");
         }
 

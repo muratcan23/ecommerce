@@ -1,37 +1,36 @@
+import NextAuth, { AuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+// import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@/libs/prismadb";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
-import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 
-// const prisma = new PrismaClient();   we wil not use like this way
-
-export default NextAuth({
+export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
-
     CredentialsProvider({
       name: "credentials",
       credentials: {
         email: { label: "email", type: "text" },
-        password: { label: "Password", type: "password" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials, req) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Invalid Email or Password");
+        if (!credentials?.email || !credentials.password) {
+          throw new Error("Invalid email or password...");
         }
         const user = await prisma.user.findUnique({
           where: {
             email: credentials.email,
           },
         });
-        if (!user || user.hashedPassword) {
-          throw new Error("There is no such user");
+
+        if (!user || !user.hashedPassword) {
+          throw new Error("Invalid pasword...");
         }
 
         const comparePassword = await bcrypt.compare(
@@ -40,14 +39,13 @@ export default NextAuth({
         );
 
         if (!comparePassword) {
-          throw new Error("Wrong pasdword...");
+          throw new Error("Wrong password...");
         }
 
         return user;
       },
     }),
   ],
-
   pages: {
     signIn: "/login",
   },
@@ -56,4 +54,6 @@ export default NextAuth({
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+export default NextAuth(authOptions);

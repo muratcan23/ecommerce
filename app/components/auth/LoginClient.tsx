@@ -28,13 +28,13 @@ const LoginClient: React.FC<LoginClientProps> = ({ currentUser }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     signIn("credentials", {
-      ...data,
+      ...data, // all data taking
       redirect: false,
     }).then((callback) => {
       if (callback?.ok) {
         router.push("/cart");
         router.refresh();
-        toast.success("Login İşlemi Basarılı...");
+        toast.success("Login succes ...");
       }
 
       if (callback?.error) {
@@ -71,14 +71,14 @@ const LoginClient: React.FC<LoginClientProps> = ({ currentUser }) => {
         />
         <Button text="Giriş Yap" onClick={handleSubmit(onSubmit)} />
         <div className="text-center my-2 text-sm text-red-500">
-          Daha Önce Kayıt Olmadıysa{" "}
+          Didnt you register before{" "}
           <Link className="underline " href="/register">
-            buraya tıkla
+            click here
           </Link>
         </div>
         <div className="text-center my-2 font-bold text-lg">OR</div>
         <Button
-          text="Google İle Giriş Yap"
+          text="sign in with Google"
           icon={FaGoogle}
           outline
           onClick={() => signIn("google")}
