@@ -69,7 +69,7 @@ const LoginClient: React.FC<LoginClientProps> = ({ currentUser }) => {
           errors={errors}
           required
         />
-        <Button text="Giriş Yap" onClick={handleSubmit(onSubmit)} />
+        <Button text="Log in" onClick={handleSubmit(onSubmit)} />
         <div className="text-center my-2 text-sm text-red-500">
           Didnt you register before{" "}
           <Link className="underline " href="/register">
