@@ -6,32 +6,29 @@ export async function getSession() {
   return await getServerSession(authOptions);
 }
 
-export async function getCurrectUSer() {
+export async function getCurrentUser() {
   try {
     const session = await getSession();
 
     if (!session?.user?.email) {
       return null;
     }
-
-    const currentUSer = await prisma.user.findUnique({
+    const currentUser = await prisma.user.findUnique({
       where: {
-        email: session?.user.email,
+        email: session?.user?.email,
       },
     });
-
-    if (!currentUSer) {
+    if (!currentUser) {
       return null;
     }
 
     return {
-      ...currentUSer,
-      createdAt: currentUSer.createdAt.toISOString(),
-      updatedAt: currentUSer.updatedAt.toISOString(),
-      emailVarified: currentUSer.emailVerified?.toISOString() || null,
+      ...currentUser,
+      createdAt: currentUser.createdAt.toISOString(),
+      updatedAt: currentUser.updatedAt.toISOString(),
+      emailVerified: currentUser.emailVerified?.toISOString() || null,
     };
-  } catch (err: any) {
-    console.log("failed to take userSession");
+  } catch (error: any) {
     return null;
   }
 }
