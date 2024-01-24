@@ -58,10 +58,13 @@ const User: React.FC<UserProps> = ({ currentUser }) => {
                 onClick={() => menuFunc("register")}
                 className="text-slate-600 cursor-pointer  hover:bg-gray-200 rounded-md ml-2"
               >
-                Register
+                <p className="p-1 text-center">Register</p>
               </div>
-              <div onClick={() => menuFunc("login")} className="text-slate-600">
-                Login
+              <div
+                onClick={() => menuFunc("login")}
+                className="text-slate-600 hover:bg-gray-200 rounded-md ml-2 cursor-pointer"
+              >
+                <p className="p-1 text-center">Login</p>
               </div>
             </div>
           )}
