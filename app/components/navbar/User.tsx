@@ -41,13 +41,13 @@ const User: React.FC<UserProps> = ({ currentUser }) => {
             <div className="space-y-1 ">
               <div
                 onClick={() => router.push("/admin")}
-                className="text-slate-600 cursor-pointer  hover:bg-gray-200 rounded-md ml-2 "
+                className="text-slate-600 cursor-pointer  hover:bg-gray-200 rounded-md ml-2 p-1 "
               >
                 Admin
               </div>
               <div
                 onClick={() => menuFunc("logout")}
-                className="text-slate-600 cursor-pointer  hover:bg-gray-200 rounded-md ml-2"
+                className="text-slate-600 cursor-pointer  hover:bg-gray-200 rounded-md ml-2 p-1"
               >
                 Logout
               </div>
