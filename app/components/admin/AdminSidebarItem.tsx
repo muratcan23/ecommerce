@@ -22,7 +22,7 @@ const AdminSidebarItem: React.FC<AdminSidebarItem> = ({
       }`}
       href={url}
     >
-      <Icon size={"25"} />
+      <Icon size={25} />
       <div>{name}</div>
     </Link>
   );
