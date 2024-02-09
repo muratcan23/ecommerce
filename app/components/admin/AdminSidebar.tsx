@@ -1,36 +1,38 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { MdBorderColor, MdDashboard, MdOutlineCreate } from "react-icons/md";
+import { MdBorderOuter, MdDashboard, MdOutlineCreate } from "react-icons/md";
 import AdminSidebarItem from "./AdminSidebarItem";
 
 const AdminSidebar = () => {
   const pathname = usePathname();
-
   const adminPanel = [
     {
-      name: "Summaries",
+      name: "sumamry",
       icon: MdDashboard,
       url: "/admin",
     },
     {
       name: "Create Product",
-      icon: MdBorderColor,
+      icon: MdOutlineCreate,
       url: "/admin/create",
     },
     {
-      name: "My orders",
+      name: "Manage Products",
       icon: MdOutlineCreate,
+      url: "/admin/manage",
+    },
+    {
+      name: "My orders",
+      icon: MdBorderOuter,
       url: "/admin/order",
     },
   ];
-
   return (
-    <div className="w-1/5 border-r h-screen ">
-      <div>
+    <div className="w-1/5 border-r h-screen p-4 bg-orange-600">
+      <div className="space-y-4">
         {adminPanel.map((admin, i) => (
           <AdminSidebarItem
             key={i}
-            admin={admin}
             selected={pathname == admin.url}
             icon={admin.icon}
             name={admin.name}

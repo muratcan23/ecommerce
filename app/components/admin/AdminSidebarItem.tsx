@@ -7,22 +7,23 @@ interface AdminSidebarItem {
   icon: IconType;
   url: string;
 }
-
 const AdminSidebarItem: React.FC<AdminSidebarItem> = ({
-  name,
   selected,
+  name,
   icon: Icon,
   url,
 }) => {
   return (
     <Link
-      className={`felx items-center gap-2 cursor-pointer ${
-        selected ? "text-red font-bold" : "text-slate-500 font-medium"
+      className={`cursor-pointer flex items-center gap-2  ${
+        selected
+          ? "text-slate-600 font-bold"
+          : " text-white font-medium hover:bg-orange-400 p-1 rounded-md"
       }`}
       href={url}
     >
-      <Icon size={25} />
-      <div> {name}</div>
+      <Icon size={"25"} />
+      <div>{name}</div>
     </Link>
   );
 };
