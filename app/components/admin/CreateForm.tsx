@@ -1,5 +1,5 @@
-const Createform = () => {
-  return <div>Createform</div>;
+const CreateForm = () => {
+  return <div>CreateForm</div>;
 };
 
-export default Createform;
+export default CreateForm;
