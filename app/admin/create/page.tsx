@@ -7,7 +7,7 @@ const CreateProduct = async () => {
   const currentUser = await getCurrentUser();
 
   if (!currentUser || currentUser.role !== "ADMIN") {
-    return <WarningText text="Buraya Girişin Yasaklı !!!" />;
+    return <WarningText text="Forbidden area !!!" />;
   }
   return (
     <AuthContainer>
