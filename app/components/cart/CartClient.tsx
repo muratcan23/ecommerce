@@ -18,7 +18,7 @@ const CartClient = () => {
 
   console.log(cartPrdcts, "cartPrdcts");
   if (!cartPrdcts || cartPrdcts.length == 0) {
-    return <div>Sepetinizde ürün bulunmamaktadır...</div>;
+    return <div>There is no product in your cart...</div>;
   }
 
   let cartPrdctsTotal = cartPrdcts.reduce(
@@ -28,11 +28,11 @@ const CartClient = () => {
   return (
     <div className="my-3 md:my-10">
       <PageContainer>
-        <div className="flex items-center gap-3 text-center border-b py-3">
-          <div className="w-1/5">Ürün Resmi</div>
-          <div className="w-1/5">Ürün Adı</div>
-          <div className="w-1/5">Ürün Miktarı</div>
-          <div className="w-1/5">Ürün Fiyatı</div>
+        <div className="flex items-center gap-3 text-center border-b py-3  font-semibold">
+          <div className="w-1/5">Product Image</div>
+          <div className="w-1/5">Product Name</div>
+          <div className="w-1/5">Product Amount</div>
+          <div className="w-1/5">Product Price</div>
           <div className="w-1/5"></div>
         </div>
         <div>
