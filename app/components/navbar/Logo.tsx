@@ -8,7 +8,7 @@ const Logo = () => {
   return (
     <div
       onClick={() => router.push("/")}
-      className="bg-orange-700 px-2 py-1 rounded-md text-lg md:text-2xl cursor-pointer "
+      className="bg-orange-700 px-2 py-1 rounded-md text-lg md:text-2xl cursor-pointer hover:bg-slate-700 "
     >
       Here.com
     </div>

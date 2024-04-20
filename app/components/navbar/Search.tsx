@@ -2,7 +2,7 @@ const Search = () => {
   return (
     <div className="hidden md:flex flex-1">
       <input
-        className="py-2 px-3 border-none outline-none flex flex-1  rounded-l-md "
+        className="py-2 px-3 border-none outline-none flex flex-1  rounded-l-md  focus:text-orange-800 "
         type="text"
         placeholder="Search anything..."
       />
